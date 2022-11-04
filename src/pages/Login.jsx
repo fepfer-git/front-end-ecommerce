@@ -3,6 +3,7 @@ import LoginImg from "../assets/images/Login-Img.jpg";
 import "../styles/Login.css";
 import login from "../services/UserService";
 import { useHistory } from "react-router-dom";
+import { toast } from "react-toastify";
 
 function Login() {
   const history = useHistory();
@@ -19,9 +20,11 @@ function Login() {
       .then((result) => {
         if (result) {
           history.push("/");
+          toast.success("Welcome" + result?.user_name);
         }
       })
       .catch((err) => {
+        toast.error("Wrong username or password!");
         setError("Wrong username or password!");
         console.log(err);
       });

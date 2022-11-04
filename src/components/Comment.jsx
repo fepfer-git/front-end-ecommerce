@@ -1,20 +1,100 @@
-import React from "react";
+import React, { useState } from "react";
 import "../styles/Comment.css";
 import { addNewRating } from "../services/RatingService";
+import "../styles/Star.css";
+import { toast } from "react-toastify";
 
 const Comment = (props) => {
+  const user = JSON.parse(localStorage.getItem("user"));
+  const [star, setStar] = useState(0);
+  const [comment, setComment] = useState("");
+
+  const submitRatingHandeler = (event) => {
+    event.preventDefault();
+    addNewRating(comment, star, user.user_name, props.productId)
+      .then((result) => {
+        if (result) {
+          console.log(result);
+          props.fetchRating();
+          toast.success("Rating successfully!");
+          setComment("");
+          setStar(0);
+        }
+      })
+      .catch((err) => {
+        console.log("error");
+        console.log(err);
+        toast.error("You are already rate this product!");
+      });
+  };
+
   return (
     <div className="container d-flex justify-content-center mt-100 mb-100">
       <div className="row">
         <div className="col-md-12">
           <div className="card">
-            <form>
+            <form onSubmit={(event) => submitRatingHandeler(event)}>
               <h1 className="pull-left">New Comment</h1>
 
+              <div style={{ marginTop: "10px  " }} className="rate">
+                <input
+                  type="radio"
+                  id="star5"
+                  name="rate"
+                  value="5"
+                  onClick={(e) => setStar(e.target.value)}
+                />
+                <label for="star5" title="text">
+                  5 stars
+                </label>
+                <input
+                  type="radio"
+                  id="star4"
+                  name="rate"
+                  value="4"
+                  onClick={(e) => setStar(e.target.value)}
+                />
+                <label for="star4" title="text">
+                  4 stars
+                </label>
+                <input
+                  type="radio"
+                  id="star3"
+                  name="rate"
+                  value="3"
+                  onClick={(e) => setStar(e.target.value)}
+                />
+                <label for="star3" title="text">
+                  3 stars
+                </label>
+                <input
+                  type="radio"
+                  id="star2"
+                  name="rate"
+                  value="2"
+                  onClick={(e) => setStar(e.target.value)}
+                />
+                <label for="star2" title="text">
+                  2 stars
+                </label>
+                <input
+                  type="radio"
+                  id="star1"
+                  name="rate"
+                  value="1"
+                  onClick={(e) => setStar(e.target.value)}
+                />
+                <label for="star1" title="text">
+                  1 star
+                </label>
+              </div>
+              <br />
               <textarea
                 class="form-control"
                 rows="2"
                 placeholder="What are you thinking?"
+                value={comment}
+                onChange={(e) => setComment(e.target.value)}
               ></textarea>
 
               <div class="mar-top clearfix">

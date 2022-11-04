@@ -30,6 +30,10 @@ const Product = (props) => {
   }, []);
 
   useEffect(() => {
+    fetchRating();
+  }, []);
+
+  const fetchRating = () => {
     getAllRatingByProductId(props.match.params.slug)
       .then((result) => {
         setProductRatings(result);
@@ -38,7 +42,7 @@ const Product = (props) => {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  };
 
   console.log(productRatings);
   console.log(product);
@@ -54,7 +58,11 @@ const Product = (props) => {
           <ProductView product={product} />
         </SectionBody>
       </Section>
-      <Comment rating={productRatings} productId={product.productId}></Comment>
+      <Comment
+        fetchRating={fetchRating}
+        rating={productRatings}
+        productId={product?.productId}
+      ></Comment>
       {/* <Section>
         <SectionTitle>Khám phá thêm</SectionTitle>
         <SectionBody>

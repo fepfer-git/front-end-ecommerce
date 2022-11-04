@@ -9,18 +9,14 @@ const getAllRatingByProductId = async (props) => {
   }
 };
 
-const addNewRating = async (props) => {
-  try {
-    const response = await axiosConfig.post("api/rating", {
-      productId: props.newRating.productId,
-      userName: props.newRating.userName,
-      rating: props.newRating.star,
-      comment: props.newRating.comment,
-    });
-    return response;
-  } catch (error) {
-    console.error(error);
-  }
+const addNewRating = async (comment, star, userName, productId) => {
+  const response = await axiosConfig.post("api/rating", {
+    productId: productId,
+    userName: userName,
+    rating: star,
+    comment: comment,
+  });
+  return response;
 };
 
 export { getAllRatingByProductId, addNewRating };
