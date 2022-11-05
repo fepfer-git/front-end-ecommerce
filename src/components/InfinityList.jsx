@@ -1,8 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
-
+import { useContext } from "react";
 import Grid from "./Grid";
 import ProductCard from "./ProductCard";
+import { SearchContext } from "./Layout";
 
 const InfinityList = (props) => {
   const perLoad = 6; // items each load
@@ -15,11 +16,19 @@ const InfinityList = (props) => {
 
   const [index, setIndex] = useState(0);
 
+  const searchValue = useContext(SearchContext);
+  console.log(searchValue);
+
   useEffect(() => {
     setData(props.data);
     console.log(props.data);
     setIndex(1);
   }, [props.data]);
+
+  useEffect(() => {
+    console.log(searchValue);
+    setData(searchValue);
+  }, [searchValue]);
 
   //   useEffect(() => {
   //     window.addEventListener("scroll", () => {

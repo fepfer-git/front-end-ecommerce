@@ -14,14 +14,6 @@ const mainNav = [
     display: "Sản phẩm",
     path: "/catalog",
   },
-  {
-    display: "Phụ kiện",
-    path: "/accessories",
-  },
-  {
-    display: "Liên hệ",
-    path: "/contact",
-  },
 ];
 
 const Header = ({ setSearchedValue }) => {
@@ -56,10 +48,11 @@ const Header = ({ setSearchedValue }) => {
       .then((result) => {
         if (result) {
           console.log(result);
+          setSearchedValue(result);
         }
       })
       .catch((err) => {
-        toast.error(err.response.data.message);
+        toast.error(err?.response?.data?.message);
         console.log(err);
       });
   };

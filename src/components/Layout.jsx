@@ -1,4 +1,4 @@
-import React from "react";
+import React, { createContext } from "react";
 
 import { BrowserRouter, Route } from "react-router-dom";
 
@@ -7,18 +7,22 @@ import Footer from "./Footer";
 import ProductViewModal from "./ProductViewModal";
 
 import Routes from "../routes/Routes";
+export const SearchContext = createContext();
 
 const Layout = () => {
   const [searchedValue, setSearchedValue] = React.useState();
+  console.log(searchedValue);
   return (
     <BrowserRouter>
       <Route
         render={() => (
           <div>
-            <Header setSearch={setSearchedValue} />
+            <Header setSearchedValue={setSearchedValue} />
             <div className="container">
               <div className="main">
-                <Routes />
+                <SearchContext.Provider value={searchedValue}>
+                  <Routes />
+                </SearchContext.Provider>
               </div>
             </div>
             <Footer />

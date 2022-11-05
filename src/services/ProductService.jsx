@@ -24,4 +24,18 @@ const searchPorudctByName = async (keyword) => {
   return response;
 };
 
-export { getAllProduct, getProductById, searchPorudctByName };
+const getAllProductByCategory = async (categoryId) => {
+  try {
+    const response = await axiosConfig.get("api/product/category" + categoryId);
+    return response;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export {
+  getAllProduct,
+  getProductById,
+  searchPorudctByName,
+  getAllProductByCategory,
+};

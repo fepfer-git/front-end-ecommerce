@@ -8,7 +8,6 @@ import Cart from "../pages/Cart";
 import Product from "../pages/Product";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
-
 const Routes = () => {
   return (
     <Switch>
