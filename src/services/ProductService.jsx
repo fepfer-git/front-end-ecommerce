@@ -26,7 +26,9 @@ const searchPorudctByName = async (keyword) => {
 
 const getAllProductByCategory = async (categoryId) => {
   try {
-    const response = await axiosConfig.get("api/product/category" + categoryId);
+    const response = await axiosConfig.get(
+      "api/product/category/" + categoryId
+    );
     return response;
   } catch (error) {
     console.error(error);

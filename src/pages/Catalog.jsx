@@ -15,6 +15,10 @@ const Catalog = () => {
     size: [],
   };
 
+  const [categories, setCategories] = useState([]);
+  const [products, setProducts] = useState([]);
+  const [clearFilterCate, setClearFilterCate] = useState("");
+
   useEffect(() => {
     getAllProduct()
       .then((result) => {
@@ -33,15 +37,11 @@ const Catalog = () => {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [clearFilterCate]);
 
-  const [filterSelected, setFilterSelected] = useState();
-
-  const [categories, setCategories] = useState([]);
-
-  const [products, setProducts] = useState([]);
-
-  const filterSelect = (categoryId) => {
+  const filterSelect = (event) => {
+    const categoryId = event.target.value;
+    console.log(categoryId);
     getAllProductByCategory(categoryId)
       .then((result) => {
         setProducts(result);
@@ -53,8 +53,9 @@ const Catalog = () => {
   };
 
   const clearFilter = () => {
-    var ele = document.getElementsByName("categoryRadio");
-    for (var i = 0; i < ele.length; i++) ele[i].checked = false;
+    var dropDown = document.getElementById("categorySelect");
+    dropDown.selectedIndex = 0;
+    setClearFilterCate(Math.random());
   };
 
   const filterRef = useRef(null);
@@ -75,38 +76,65 @@ const Catalog = () => {
             <div className="catalog__filter__widget__title">
               danh mục sản phẩm
             </div>
-
+            <div
+              style={{ marginTop: "-40px" }}
+              className="catalog__filter__widget"
+            >
+              <div className="catalog__filter__widget__content">
+                <Button size="sm" onClick={clearFilter}>
+                  xóa bộ lọc
+                </Button>
+              </div>
+            </div>
             {/* Filter category */}
             <div className="catalog__filter__widget__content">
-              {categories?.map((item, index) => (
-                <div
-                  key={item.categoryId}
-                  className="catalog__filter__widget__content__item"
-                >
-                  <label
-                    style={{ color: "#283618", fontWeight: "bold" }}
-                    className="custom-checkbox"
+              <select
+                id="categorySelect"
+                style={{
+                  width: "150px",
+                  height: "30px",
+                  color: "black",
+                  fontWeight: "Bold",
+                }}
+                onChange={(event) => filterSelect(event)}
+              >
+                <option value="" selected disabled hidden>
+                  Category
+                </option>
+                {categories?.map((item, index) => (
+                  <option
+                    value={item.categoryId}
+                    key={item.categoryId}
+                    style={{
+                      color: "black",
+                      fontWeight: "Bold",
+                    }}
                   >
-                    <input
-                      name="categoryRadio"
-                      id={item.categoryId}
-                      type="radio"
-                    />
+                    {item.categoryName}
+                  </option>
 
-                    <span className="custom-checkbox__checkmark">
-                      <i className="bx bx-check"></i>
-                    </span>
-                    {item?.categoryName}
-                  </label>
-                </div>
-              ))}
-            </div>
-          </div>
-          <div className="catalog__filter__widget">
-            <div className="catalog__filter__widget__content">
-              <Button size="sm" onClick={clearFilter}>
-                xóa bộ lọc
-              </Button>
+                  // <div
+                  //   key={item.categoryId}
+                  //   className="catalog__filter__widget__content__item"
+                  // >
+                  //   <label
+                  //     style={{ color: "#283618", fontWeight: "bold" }}
+                  //     className="custom-checkbox"
+                  //   >
+                  //     <input
+                  //       name="categoryRadio"
+                  //       id={item.categoryId}
+                  //       type="radio"
+                  //     />
+
+                  //     <span className="custom-checkbox__checkmark">
+                  //       <i className="bx bx-check"></i>
+                  //     </span>
+                  //     {item?.categoryName}
+                  //   </label>
+                  // </div>
+                ))}
+              </select>
             </div>
           </div>
         </div>
