@@ -9,11 +9,17 @@ instance.interceptors.request.use(
   function (config) {
     const user = JSON.parse(localStorage.getItem("user"));
     if (user) {
-      const accessToken = user.access_token;
-      console.log(accessToken);
-      instance.defaults.headers.common[
-        "Authorization"
-      ] = `Bearer ${accessToken}`;
+      var expiration = Number(user.expiration);
+      var today = Math.round(new Date().getTime());
+      console.log(today);
+      console.log(expiration);
+      if (today < expiration) {
+        const accessToken = user.access_token;
+        console.log(accessToken);
+        instance.defaults.headers.common[
+          "Authorization"
+        ] = `Bearer ${accessToken}`;
+      }
     }
     return config;
   },

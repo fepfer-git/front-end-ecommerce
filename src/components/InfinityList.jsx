@@ -35,28 +35,28 @@ const InfinityList = (props) => {
   //     });
   //   }, [listRef]);
 
-  useEffect(() => {
-    const getItems = () => {
-      const pages = Math.floor(props.data.length / perLoad);
-      const maxIndex = props.data.length % perLoad === 0 ? pages : pages + 1;
+  // useEffect(() => {
+  //   const getItems = () => {
+  //     const pages = Math.floor(6 / perLoad);
+  //     const maxIndex = 6 % perLoad === 0 ? pages : pages + 1;
 
-      if (load && index <= maxIndex) {
-        const start = perLoad * index;
-        const end = start + perLoad;
+  //     if (load && index <= maxIndex) {
+  //       const start = perLoad * index;
+  //       const end = start + perLoad;
 
-        setData(data.concat(props.data.slice(start, end)));
-        setIndex(index + 1);
-      }
-    };
-    getItems();
-    setLoad(false);
-  }, [load, index, data, props.data]);
+  //       setData(data.concat(props.data.slice(start, end)));
+  //       setIndex(index + 1);
+  //     }
+  //   };
+  //   getItems();
+  //   setLoad(false);
+  // }, [load, index, data, props.data]);
 
   return (
     <div ref={listRef}>
       <Grid col={3} mdCol={2} smCol={1} gap={20}>
-        {data.length > 0 &&
-          data.map((item, index) => (
+        {6 > 0 &&
+          data?.map((item, index) => (
             <ProductCard
               key={index}
               img01={

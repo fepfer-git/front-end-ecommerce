@@ -11,7 +11,7 @@ const Comment = (props) => {
 
   const submitRatingHandeler = (event) => {
     event.preventDefault();
-    addNewRating(comment, star, user.user_name, props.productId)
+    addNewRating(comment, star, user && user.user_name, props.productId)
       .then((result) => {
         if (result) {
           console.log(result);
@@ -23,8 +23,12 @@ const Comment = (props) => {
       })
       .catch((err) => {
         console.log("error");
-        console.log(err);
-        toast.error("You are already rate this product!");
+        console.log(err.response.status);
+        if (403 === err.response.status) {
+          toast.error("You need to login to rate!");
+        } else {
+          toast.error("You are already rated this product!");
+        }
       });
   };
 

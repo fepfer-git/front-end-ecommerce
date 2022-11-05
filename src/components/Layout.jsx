@@ -9,12 +9,13 @@ import ProductViewModal from "./ProductViewModal";
 import Routes from "../routes/Routes";
 
 const Layout = () => {
+  const [searchedValue, setSearchedValue] = React.useState();
   return (
     <BrowserRouter>
       <Route
-        render={(props) => (
+        render={() => (
           <div>
-            <Header {...props} />
+            <Header setSearch={setSearchedValue} />
             <div className="container">
               <div className="main">
                 <Routes />

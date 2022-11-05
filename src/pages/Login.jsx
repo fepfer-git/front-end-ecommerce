@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import LoginImg from "../assets/images/Login-Img.jpg";
 import "../styles/Login.css";
-import login from "../services/UserService";
-import { useHistory } from "react-router-dom";
+import { login } from "../services/UserService";
+import { Link, useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 
 function Login() {
@@ -20,7 +20,7 @@ function Login() {
       .then((result) => {
         if (result) {
           history.push("/");
-          toast.success("Welcome" + result?.user_name);
+          toast.success("Welcome " + result?.user_name);
         }
       })
       .catch((err) => {
@@ -38,11 +38,15 @@ function Login() {
         style={{ backgroundImage: `url(${LoginImg})` }}
       ></div>
       <div className="rightSide">
-        <h1> Login</h1>
+        <h1>
+          {" "}
+          Login / <Link to={`/register`}>Register now!</Link>{" "}
+        </h1>
 
         <form id="contact-form" onSubmit={(event) => loginHandeler(event)}>
           <label htmlFor="name">User Name</label>
           <input
+            required
             onChange={(event) => {
               setUser({
                 ...user,
@@ -55,6 +59,7 @@ function Login() {
           />
           <label htmlFor="Password">Password</label>
           <input
+            required
             onChange={(event) => {
               setUser({ ...user, [event.target.name]: event.target.value });
             }}

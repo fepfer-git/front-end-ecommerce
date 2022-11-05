@@ -21,6 +21,9 @@ const ProductView = (props) => {
   const [images, setImages] = useState([]);
   const [detail, setDetail] = useState({});
 
+  const [quantity, setQuantity] = useState(0);
+  const [size, setSize] = useState(0);
+
   useEffect(() => {
     if (props.product && props.product.images) {
       setImages(props.product.images);
@@ -32,40 +35,35 @@ const ProductView = (props) => {
   const handelSize = (event) => {
     const index = event.target.value;
     setDetail(props.product.productDetails[index]);
+    setSize(props.product.productDetails[index].size.sizeId);
+    console.log(size);
   };
 
-  // const updateQuantity = (type) => {
-  //     if (type === 'plus') {
-  //         setQuantity(quantity + 1)
-  //     } else {
-  //         setQuantity(quantity - 1 < 1 ? 1 : quantity - 1)
-  //     }
-  // }
-
-  //     if (size === undefined) {
-  //         alert('Vui lòng chọn kích cỡ!')
-  //         return false
-  //     }
-
-  //     return true
-  // }
+  const updateQuantity = (type) => {
+    if (type === "plus") {
+      setQuantity(quantity + 1);
+    } else {
+      setQuantity(quantity - 1 < 1 ? 1 : quantity - 1);
+    }
+    return true;
+  };
 
   // const addToCart = () => {
-  //     if (check()) {
-  //         let newItem = {
-  //             slug: product.slug,
-  //             color: color,
-  //             size: size,
-  //             price: product.price,
-  //             quantity: quantity
-  //         }
-  //         if (dispatch(addItem(newItem))) {
-  //             alert('Success')
-  //         } else {
-  //             alert('Fail')
-  //         }
+  //   if (check()) {
+  //     let newItem = {
+  //       slug: product.slug,
+  //       color: color,
+  //       size: size,
+  //       price: product.price,
+  //       quantity: quantity,
+  //     };
+  //     if (dispatch(addItem(newItem))) {
+  //       alert("Success");
+  //     } else {
+  //       alert("Fail");
   //     }
-  // }
+  //   }
+  // };
 
   // const goToCart = () => {
   //     if (check()) {
@@ -87,7 +85,7 @@ const ProductView = (props) => {
 
   return (
     <div className="product">
-      <div className="product__images">
+      <div style={{ marginRight: "20px" }} className="product__images">
         {/*------------------ Hiển thị ảnh */}
 
         <div className="product__images__list"></div>
@@ -145,22 +143,27 @@ const ProductView = (props) => {
           <div className="product__info__item__title">
             Số lượng: {detail?.stock}
           </div>
-          {/* <div className="product__info__item__quantity">
-                        <div className="product__info__item__quantity__btn" onClick={() => updateQuantity('minus')}>
-                            <i className="bx bx-minus"></i>
-                        </div>
-                        <div className="product__info__item__quantity__input">
-                            {quantity}
-                        </div>
-                        <div className="product__info__item__quantity__btn" onClick={() => updateQuantity('plus')}>
-                            <i className="bx bx-plus"></i>
-                        </div>
-                    </div> */}
+          <div className="product__info__item__quantity">
+            <div
+              className="product__info__item__quantity__btn"
+              onClick={() => updateQuantity("minus")}
+            >
+              <i className="bx bx-minus"></i>
+            </div>
+            <div className="product__info__item__quantity__input">
+              {quantity}
+            </div>
+            <div
+              className="product__info__item__quantity__btn"
+              onClick={() => updateQuantity("plus")}
+            >
+              <i className="bx bx-plus"></i>
+            </div>
+          </div>
         </div>
         {/* <div className="product__info__item">
-                    <Button onClick={() => addToCart()}>thêm vào giỏ</Button>
-                    <Button onClick={() => goToCart()}>mua ngay</Button>
-                </div> */}
+          <Button onClick={() => addToCart()}>thêm vào giỏ</Button>
+        </div> */}
       </div>
       <div
         className={`product-description mobile ${

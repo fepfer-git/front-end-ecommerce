@@ -11,4 +11,21 @@ const login = async (userName, password) => {
   return response;
 };
 
-export default login;
+const register = async (
+  userName,
+  fullName,
+  password,
+  confirmPassword,
+  email
+) => {
+  const response = await axiosConfig.post("api/user", {
+    userName: userName,
+    fullName: fullName,
+    password: password,
+    confirmPassword: confirmPassword,
+    email: email,
+  });
+  return response;
+};
+
+export { login, register };
