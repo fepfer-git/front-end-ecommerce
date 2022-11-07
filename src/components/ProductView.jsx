@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
 
 import { withRouter } from "react-router";
@@ -10,6 +10,8 @@ import { remove } from "../redux/product-modal/productModalSlice";
 
 import Button from "./Button";
 import numberWithCommas from "../utils/numberWithCommas";
+import { CartItemContext } from "./Layout";
+import { toast } from "react-toastify";
 
 const ProductView = (props) => {
   const dispatch = useDispatch();
@@ -20,9 +22,10 @@ const ProductView = (props) => {
   const [descriptionExpand, setDescriptionExpand] = useState([]);
   const [images, setImages] = useState([]);
   const [detail, setDetail] = useState({});
-
   const [quantity, setQuantity] = useState(0);
   const [size, setSize] = useState(0);
+
+  const { cartItems, setCartItems } = useContext(CartItemContext);
 
   useEffect(() => {
     if (props.product && props.product.images) {
@@ -48,22 +51,20 @@ const ProductView = (props) => {
     return true;
   };
 
-  // const addToCart = () => {
-  //   if (check()) {
-  //     let newItem = {
-  //       slug: product.slug,
-  //       color: color,
-  //       size: size,
-  //       price: product.price,
-  //       quantity: quantity,
-  //     };
-  //     if (dispatch(addItem(newItem))) {
-  //       alert("Success");
-  //     } else {
-  //       alert("Fail");
-  //     }
-  //   }
-  // };
+  const addToCart = () => {
+    if (quantity === 0) {
+      toast.error("Please choose number of proudct you want to buy!");
+    } else {
+      setCartItems([
+        ...cartItems,
+        {
+          quantity: quantity,
+          productDetailId: detail.productDetailId,
+        },
+      ]);
+      console.log(cartItems);
+    }
+  };
 
   // const goToCart = () => {
   //     if (check()) {
@@ -161,9 +162,9 @@ const ProductView = (props) => {
             </div>
           </div>
         </div>
-        {/* <div className="product__info__item">
-          <Button onClick={() => addToCart()}>thêm vào giỏ</Button>
-        </div> */}
+        <div className="product__info__item">
+          <Button onClick={() => addToCart()}>Mua</Button>
+        </div>
       </div>
       <div
         className={`product-description mobile ${
