@@ -52,17 +52,34 @@ const ProductView = (props) => {
   };
 
   const addToCart = () => {
+    var findItem = cartItems.find(
+      (item) => item.productDetailId === detail.productDetailId
+    );
+    console.log(findItem);
     if (quantity === 0) {
       toast.error("Please choose number of proudct you want to buy!");
     } else {
-      setCartItems([
-        ...cartItems,
-        {
-          quantity: quantity,
-          productDetailId: detail.productDetailId,
-        },
-      ]);
-      console.log(cartItems);
+      if (findItem !== undefined) {
+        console.log("Chạy if");
+        setCartItems((prevState) => [
+          ...prevState.map((cartItem) =>
+            cartItem.productDetailId === detail.productDetailId
+              ? { ...cartItem, quantity: cartItem.quantity + quantity }
+              : cartItem
+          ),
+        ]);
+      } else {
+        console.log("Chạy else");
+        setCartItems([
+          ...cartItems,
+          {
+            quantity: quantity,
+            productDetailId: detail.productDetailId,
+          },
+        ]);
+        console.log(cartItems);
+      }
+      toast.success("Add product to cart successfully!");
     }
   };
 

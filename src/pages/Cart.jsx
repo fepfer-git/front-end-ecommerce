@@ -1,16 +1,15 @@
 import React, { useContext, useEffect, useState } from "react";
 
-import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { CartItemContext } from "../components/Layout";
 
 import Helmet from "../components/Helmet";
 import CartItem from "../components/CartItem";
-import Button from "../components/Button";
-
 import numberWithCommas from "../utils/numberWithCommas";
 
 import { getProductDetailById } from "../services/ProductDetailService";
+import { newOrder } from "../services/OrderService";
+import { toast } from "react-toastify";
 
 const Cart = () => {
   // const cartItems = useSelector((state) => state.cartItems.value)
@@ -18,6 +17,8 @@ const Cart = () => {
   const [totalProducts, setTotalProducts] = useState(0);
 
   const [totalPrice, setTotalPrice] = useState(0);
+
+  const [contact, setcontact] = useState({ orderAddress: "", phone: "" });
 
   const { cartItems, setCartItems } = useContext(CartItemContext);
 
@@ -57,6 +58,30 @@ const Cart = () => {
     });
   }, [cartItems]);
 
+  const placeOrder = (event) => {
+    event.preventDefault();
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (user) {
+      newOrder(contact, user.user_name, cartItems)
+        .then((result) => {
+          console.log(result);
+          toast.success("Order successfully!");
+          setcontact({ orderAddress: "", phone: "" });
+          setCartItems([]);
+          setCartItemsInfor([]);
+          setTotalPrice(0);
+        })
+        .catch((err) => {
+          toast.error(err.response.data.message);
+          console.log(err.response.data.message);
+        });
+    } else {
+      toast.error("You need to login first to place order!");
+    }
+
+    console.log("order");
+  };
+
   return (
     <Helmet title="Giỏ hàng">
       <div className="cart">
@@ -68,14 +93,46 @@ const Cart = () => {
               <span>{numberWithCommas(Number(totalPrice))}</span>
             </div>
           </div>
-          <div className="cart__info__btn">
-            <Button size="block">Đặt hàng</Button>
-            <Link to="/catalog">
-              <Button size="block">Tiếp tục mua hàng</Button>
-            </Link>
-          </div>
+
+          <form onSubmit={(event) => placeOrder(event)}>
+            <label>Address</label>
+            <input
+              name="orderAddress"
+              placeholder="VD: Quận 9, TP.HCM"
+              required
+              onChange={(event) => {
+                setcontact({
+                  ...contact,
+                  [event.target.name]: event.target.value,
+                });
+              }}
+            ></input>
+            <label>Phone</label>
+            <input
+              name="phone"
+              placeholder="VD: 123-45-678"
+              required
+              type="tel"
+              maxLength="10"
+              onChange={(event) => {
+                setcontact({
+                  ...contact,
+                  [event.target.name]: event.target.value,
+                });
+              }}
+            ></input>
+
+            <div className="cart__info__btn">
+              <button style={{ marginRight: "5px" }}>Đặt hàng</button>
+              <Link to="/catalog">
+                <p style={{ fontSize: "20px" }} size="block">
+                  Tiếp tục mua hàng
+                </p>
+              </Link>
+            </div>
+          </form>
         </div>
-        <div className="cart__list">
+        <div style={{ marginTop: "50px" }} className="cart__list">
           {cartItemsInfor.map((item, index) => (
             <CartItem item={item} key={index} />
           ))}
