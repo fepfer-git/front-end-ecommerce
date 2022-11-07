@@ -82,7 +82,7 @@ const Catalog = () => {
             >
               <div className="catalog__filter__widget__content">
                 <Button size="sm" onClick={clearFilter}>
-                  xóa bộ lọc
+                  xóa bộ lọc & tìm kiếm
                 </Button>
               </div>
             </div>

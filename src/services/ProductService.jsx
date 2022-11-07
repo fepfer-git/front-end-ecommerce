@@ -20,14 +20,16 @@ const getProductById = async (productId) => {
 };
 
 const searchPorudctByName = async (keyword) => {
-  const response = await axiosConfig.get("api/product/search/" + keyword);
+  const response = await axiosConfig.get(
+    "api/product/search?searchName=" + keyword
+  );
   return response;
 };
 
 const getAllProductByCategory = async (categoryId) => {
   try {
     const response = await axiosConfig.get(
-      "api/product/category/" + categoryId
+      "api/products/category?categoryId=" + categoryId
     );
     return response;
   } catch (error) {

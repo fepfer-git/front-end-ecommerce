@@ -23,11 +23,13 @@ const Comment = (props) => {
       })
       .catch((err) => {
         console.log("error");
-        console.log(err.response.status);
-        if (403 === err.response.status) {
-          toast.error("You need to login to rate!");
-        } else {
+        console.log(err);
+        if (
+          "You are already rated this product!" === err.response.data.message
+        ) {
           toast.error("You are already rated this product!");
+        } else {
+          toast.error("You need to login to rate this poruduct");
         }
       });
   };

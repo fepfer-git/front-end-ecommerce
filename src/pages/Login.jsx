@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import LoginImg from "../assets/images/Login-Img.jpg";
 import "../styles/Login.css";
 import { login } from "../services/UserService";
 import { Link, useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
+import { LoginContext } from "../components/Layout";
 
 function Login() {
   const history = useHistory();
@@ -14,13 +15,28 @@ function Login() {
 
   const [error, setError] = useState("");
 
+  const { checkLogin, setCheckLogin } = useContext(LoginContext);
+
   const loginHandeler = (event) => {
     event.preventDefault();
     login(user.username, user.password)
       .then((result) => {
-        if (result) {
+        if ("USER" === result.user_role) {
+          setCheckLogin({
+            userName: result.user_name,
+            userRole: result.user_role,
+            expiration: result.expiration,
+          });
           history.push("/");
           toast.success("Welcome " + result?.user_name);
+        } else {
+          setCheckLogin({
+            userName: result.user_name,
+            userRole: result.user_role,
+            expiration: result.expiration,
+          });
+          history.push("/admin");
+          toast.success("Welcome Admin: " + result?.user_name);
         }
       })
       .catch((err) => {

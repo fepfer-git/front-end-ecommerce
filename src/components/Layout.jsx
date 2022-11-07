@@ -7,26 +7,39 @@ import Footer from "./Footer";
 import ProductViewModal from "./ProductViewModal";
 
 import Routes from "../routes/Routes";
-export const SearchContext = createContext();
+import { useState } from "react";
+const SearchContext = createContext();
+const LoginContext = createContext();
 
 const Layout = () => {
-  const [searchedValue, setSearchedValue] = React.useState();
+  const [searchedValue, setSearchedValue] = useState();
+  const [checkLogin, setCheckLogin] = useState({
+    userName: "",
+    userRole: "",
+    expiration: 0,
+  });
+  const loginContextValue = { checkLogin, setCheckLogin };
   console.log(searchedValue);
   return (
     <BrowserRouter>
       <Route
         render={() => (
           <div>
-            <Header setSearchedValue={setSearchedValue} />
-            <div className="container">
-              <div className="main">
-                <SearchContext.Provider value={searchedValue}>
-                  <Routes />
-                </SearchContext.Provider>
+            <LoginContext.Provider value={loginContextValue}>
+              <Header
+                setSearchedValue={setSearchedValue}
+                checkLogin={checkLogin}
+              />
+              <div className="container">
+                <div className="main">
+                  <SearchContext.Provider value={searchedValue}>
+                    <Routes />
+                  </SearchContext.Provider>
+                </div>
               </div>
-            </div>
-            <Footer />
-            <ProductViewModal />
+              <Footer />
+              <ProductViewModal />
+            </LoginContext.Provider>
           </div>
         )}
       />
@@ -34,4 +47,4 @@ const Layout = () => {
   );
 };
 
-export default Layout;
+export { Layout, SearchContext, LoginContext };

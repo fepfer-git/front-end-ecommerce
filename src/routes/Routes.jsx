@@ -8,6 +8,9 @@ import Cart from "../pages/Cart";
 import Product from "../pages/Product";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
+import AdminCatalog from "../pages/AdminCatalog";
+import SizeManagement from "../pages/SizeManagement";
+import CategoryManagement from "../pages/CategoryManagement";
 const Routes = () => {
   return (
     <Switch>
@@ -17,6 +20,9 @@ const Routes = () => {
       <Route path="/cart" component={Cart} />
       <Route path="/login" component={Login} />
       <Route path="/register" component={Register} />
+      <Route path="/admin" component={AdminCatalog} />
+      <Route path="/size" component={SizeManagement} />
+      <Route path="/category" component={CategoryManagement} />
     </Switch>
   );
 };

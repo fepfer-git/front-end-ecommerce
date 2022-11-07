@@ -4,20 +4,20 @@ const img3 = require("../images/slider/slide_3.png").default;
 
 const heroSliderData = [
   {
-    title: "Áo vest cổ hai ve cách điệu.",
-    description:
-      "Để tạo nên những bộ suit đẳng cấp, các nhà thiết kế tài ba của IVY Men tỉ mỉ trong từng đường chỉ, phom dáng cứng cáp từ cầu vai, vạt áo cho đến chiều dài chuẩn của ống tay đều được IVY Men chú trọng.",
-    img: img1,
-    color: "blue",
-    path: "/catalog/ao-thun-dinosaur-01",
-  },
-  {
     title: "DYLAN CHECKED SHIRT",
     description:
       "DYLAN CHECKED SHIRT sử dụng công nghệ vải cao cấp thân thiện với môi trường sản xuất độc quyền chống co rút vải, sản phẩm thích hợp cho các bạn có môi trường làm việc năng động như hiện nay",
     img: img2,
     path: "/catalog/ao-thun-dinosaur-02",
     color: "pink",
+  },
+  {
+    title: "Áo vest cổ hai ve cách điệu.",
+    description:
+      "Để tạo nên những bộ suit đẳng cấp, các nhà thiết kế tài ba của IVY Men tỉ mỉ trong từng đường chỉ, phom dáng cứng cáp từ cầu vai, vạt áo cho đến chiều dài chuẩn của ống tay đều được IVY Men chú trọng.",
+    img: img1,
+    color: "blue",
+    path: "/catalog/ao-thun-dinosaur-01",
   },
   {
     title: "Polo Nữ Coolmax Lacoste",

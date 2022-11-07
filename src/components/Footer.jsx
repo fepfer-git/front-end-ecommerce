@@ -84,9 +84,9 @@ const Footer = () => {
           </div>
           <div className="footer__about">
             <p>
-              <Link to="/">
-                <img src={logo} className="footer__logo" alt="" />
-              </Link>
+              {/* <Link to="/"> */}
+              <img src={logo} className="footer__logo" alt="" />
+              {/* </Link> */}
             </p>
             <p>
               Hướng đến mục tiêu mang lại niềm vui ăn mặc mới mỗi ngày cho hàng
