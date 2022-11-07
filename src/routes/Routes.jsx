@@ -11,6 +11,7 @@ import Register from "../pages/Register";
 import AdminCatalog from "../pages/AdminCatalog";
 import SizeManagement from "../pages/SizeManagement";
 import CategoryManagement from "../pages/CategoryManagement";
+import UserManagement from "../pages/UserManagement";
 const Routes = () => {
   return (
     <Switch>
@@ -23,6 +24,7 @@ const Routes = () => {
       <Route path="/admin" component={AdminCatalog} />
       <Route path="/size" component={SizeManagement} />
       <Route path="/category" component={CategoryManagement} />
+      <Route path="/manageUser" component={UserManagement} />
     </Switch>
   );
 };

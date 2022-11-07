@@ -10,9 +10,8 @@ import Routes from "../routes/Routes";
 import { useState } from "react";
 const SearchContext = createContext();
 const LoginContext = createContext();
-
 const Layout = () => {
-  const [searchedValue, setSearchedValue] = useState();
+  const [searchedValue, setSearchedValue] = useState("");
   const [checkLogin, setCheckLogin] = useState({
     userName: "",
     userRole: "",

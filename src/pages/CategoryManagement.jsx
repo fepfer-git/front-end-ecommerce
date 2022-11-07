@@ -56,8 +56,9 @@ const CategoryManagement = () => {
       <h1>Size Management</h1>
       <br />
       <h2>
-        <Link to="/admin">Add new product</Link> |
-        <Link to="/size">Add new size</Link> | Add new categoy
+        <Link to="/admin">Manage Product</Link> |
+        <Link to="/size">Manage size</Link> | Manage categoy |{" "}
+        <Link to="/manageUser">Manage user</Link>
       </h2>
 
       <form onSubmit={(event) => handlerCreateSize(event)}>

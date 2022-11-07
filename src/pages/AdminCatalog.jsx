@@ -24,8 +24,9 @@ const AdminCatalog = () => {
       <h1>Product Management</h1>
       <br />
       <h2>
-        Add new product |<Link to="/size">Add new size</Link> |{" "}
-        <Link to="/category">Add new categoy</Link>
+        Manage Product |<Link to="/size">Manage size</Link> |{" "}
+        <Link to="/category">Manage categoy</Link> |{" "}
+        <Link to="/manageUser">Manage user</Link>
       </h2>
 
       <form id="contact-form" onSubmit={(event) => createProductHandler(event)}>

@@ -28,4 +28,9 @@ const register = async (
   return response;
 };
 
-export { login, register };
+const getAllUsers = async () => {
+  const response = await axiosConfig.get("api/users");
+  return response;
+};
+
+export { login, register, getAllUsers };
