@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import { Route, Switch } from "react-router-dom";
 
@@ -12,7 +12,11 @@ import AdminCatalog from "../pages/AdminCatalog";
 import SizeManagement from "../pages/SizeManagement";
 import CategoryManagement from "../pages/CategoryManagement";
 import UserManagement from "../pages/UserManagement";
+import NotFoundPage from "../pages/NotFoundPage";
+import UserProfile from "../pages/UserProfile";
 const Routes = () => {
+  const user = JSON.parse(localStorage.getItem("user"));
+
   return (
     <Switch>
       <Route path="/" exact component={Home} />
@@ -21,10 +25,28 @@ const Routes = () => {
       <Route path="/cart" component={Cart} />
       <Route path="/login" component={Login} />
       <Route path="/register" component={Register} />
-      <Route path="/admin" component={AdminCatalog} />
-      <Route path="/size" component={SizeManagement} />
-      <Route path="/category" component={CategoryManagement} />
-      <Route path="/manageUser" component={UserManagement} />
+      <Route
+        path="/admin"
+        component={user?.user_role === "ADMIN" ? AdminCatalog : NotFoundPage}
+      />
+      <Route
+        path="/size"
+        component={user?.user_role === "ADMIN" ? SizeManagement : NotFoundPage}
+      />
+      <Route
+        path="/category"
+        component={
+          user?.user_role === "ADMIN" ? CategoryManagement : NotFoundPage
+        }
+      />
+      <Route
+        path="/manageUser"
+        component={user?.user_role === "ADMIN" ? UserManagement : NotFoundPage}
+      />
+      <Route
+        path="/profile"
+        component={user?.user_role === "USER" ? UserProfile : NotFoundPage}
+      />
     </Switch>
   );
 };

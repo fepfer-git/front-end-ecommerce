@@ -93,7 +93,6 @@ const Cart = () => {
               <span>{numberWithCommas(Number(totalPrice))}</span>
             </div>
           </div>
-
           <form onSubmit={(event) => placeOrder(event)}>
             <label>Address</label>
             <input

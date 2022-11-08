@@ -15,19 +15,17 @@ ReactDOM.render(
   // <React.StrictMode>
   <Provider store={store}>
     <Layout />
+
     <ToastContainer
       position="top-right"
-      autoClose={5000}
-      hideProgressBar={false}
+      autoClose={1}
+      hideProgressBar={true}
       newestOnTop={false}
       closeOnClick
       rtl={false}
-      pauseOnFocusLoss
       draggable
-      pauseOnHover
       theme="light"
     />
-    {/* Same as */}
     <ToastContainer />
   </Provider>,
   // </React.StrictMode>,

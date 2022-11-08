@@ -43,7 +43,6 @@ const SizeManagement = () => {
   }, [reload]);
 
   const deleteHandle = (sizeId) => {
-    toast.success(sizeId);
     deleteSize(sizeId)
       .then((result) => {
         toast.success("Delete success");

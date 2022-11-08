@@ -120,7 +120,10 @@ const Comment = (props) => {
                   <div className="d-flex flex-row comment-row">
                     <div className="p-2"></div>
                     <div className="comment-text w-100">
-                      <h3>Anonymous đã đánh giá: {rating?.rating} ☆</h3>
+                      <h3>
+                        {rating?.user?.fullName} | đã đánh giá: {rating?.rating}{" "}
+                        ☆
+                      </h3>
                       <div className="comment-footer">
                         <span style={{ fontSize: "10px" }} className="date">
                           {rating?.ratingDate}

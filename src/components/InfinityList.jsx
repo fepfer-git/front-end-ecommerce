@@ -1,20 +1,18 @@
 import React, { useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
-import { useContext } from "react";
 import Grid from "./Grid";
 import ProductCard from "./ProductCard";
+import Pagination from "./Pagination";
 import { SearchContext } from "./Layout";
+import { useContext } from "react";
 
 const InfinityList = (props) => {
-  const perLoad = 6; // items each load
-
   const listRef = useRef(null);
 
   const [data, setData] = useState(props.data);
 
-  const [load, setLoad] = useState(true);
-
-  const [index, setIndex] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [productsPerPage] = useState(6);
 
   const searchValue = useContext(SearchContext);
   console.log(searchValue);
@@ -22,7 +20,6 @@ const InfinityList = (props) => {
   useEffect(() => {
     setData(props.data);
     console.log(props.data);
-    setIndex(1);
   }, [props.data]);
 
   useEffect(() => {
@@ -30,43 +27,20 @@ const InfinityList = (props) => {
     setData(searchValue);
   }, [searchValue]);
 
-  //   useEffect(() => {
-  //     window.addEventListener("scroll", () => {
-  //       if (listRef && listRef.current) {
-  //         if (
-  //           window.scrollY + window.innerHeight >=
-  //           listRef.current.clientHeight + listRef.current.offsetTop + 200
-  //         ) {
-  //           console.log("bottom reach");
-  //           setLoad(true);
-  //         }
-  //       }
-  //     });
-  //   }, [listRef]);
+  //Get current posts
+  const indexOfLastProduct = currentPage * productsPerPage;
+  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+  const currentProducts = data.slice(indexOfFirstProduct, indexOfLastProduct);
 
-  // useEffect(() => {
-  //   const getItems = () => {
-  //     const pages = Math.floor(6 / perLoad);
-  //     const maxIndex = 6 % perLoad === 0 ? pages : pages + 1;
-
-  //     if (load && index <= maxIndex) {
-  //       const start = perLoad * index;
-  //       const end = start + perLoad;
-
-  //       setData(data.concat(props.data.slice(start, end)));
-  //       setIndex(index + 1);
-  //     }
-  //   };
-  //   getItems();
-  //   setLoad(false);
-  // }, [load, index, data, props.data]);
+  //Change page
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
     <div ref={listRef}>
       <Grid col={3} mdCol={2} smCol={1} gap={20}>
         {6 > 0 &&
-          data &&
-          data?.map((item, index) => (
+          currentProducts &&
+          currentProducts?.map((item, index) => (
             <ProductCard
               key={index}
               img01={
@@ -85,6 +59,12 @@ const InfinityList = (props) => {
             />
           ))}
       </Grid>
+      <Pagination
+        productsPerPage={productsPerPage}
+        totalProducts={data.length}
+        paginate={paginate}
+        currentPage={currentPage}
+      />
     </div>
   );
 };

@@ -40,20 +40,19 @@ const CategoryManagement = () => {
   }, [reload]);
 
   const deleteHandle = (categoryId) => {
-    toast.success(categoryId);
     deleteCategory(categoryId)
       .then((result) => {
         toast.success("Delete success");
         setreload(Math.random);
       })
       .catch((err) => {
-        toast.success(err.response.data.message);
+        toast.error(err.response.data.message);
       });
   };
 
   return (
     <div>
-      <h1>Size Management</h1>
+      <h1>Category Management</h1>
       <br />
       <h2>
         <Link to="/admin">Manage Product</Link> |

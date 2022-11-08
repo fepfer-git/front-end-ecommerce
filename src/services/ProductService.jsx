@@ -10,6 +10,15 @@ const getAllProduct = async () => {
   }
 };
 
+const getAllProductsAdmin = async () => {
+  try {
+    const response = await axiosConfig.get("api/products");
+    return response;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 const getProductById = async (productId) => {
   try {
     const response = await axiosConfig.get("api/product/" + productId);
@@ -37,9 +46,16 @@ const getAllProductByCategory = async (categoryId) => {
   }
 };
 
+const deleteAProduct = async (keyword) => {
+  const response = await axiosConfig.delete("api/product/" + keyword);
+  return response;
+};
+
 export {
   getAllProduct,
   getProductById,
   searchPorudctByName,
   getAllProductByCategory,
+  getAllProductsAdmin,
+  deleteAProduct,
 };

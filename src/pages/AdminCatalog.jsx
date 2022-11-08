@@ -1,8 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
+import { getAllProductsAdmin } from "../services/ProductService";
+import { deleteAProduct } from "../services/ProductService";
 import "../styles/Table.css";
 
 const AdminCatalog = () => {
+  const [reload, setreload] = useState(0);
+  const [products, setProducts] = useState([]);
   const [createProduct, setCreateProduct] = useState({
     productName: "",
     productDescription: "",
@@ -16,8 +21,30 @@ const AdminCatalog = () => {
 
     categoryId: 0,
   });
+  const fetchProduct = () => {
+    getAllProductsAdmin()
+      .then((result) => {
+        setProducts(result);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
-  const createProductHandler = () => {};
+  useEffect(() => {
+    fetchProduct();
+  }, [reload]);
+
+  const deleteHandle = (productId) => {
+    deleteAProduct(productId)
+      .then((result) => {
+        toast.success("Delete product successfully!");
+        setreload(Math.random);
+      })
+      .catch((err) => {
+        toast.error(err.response.data.message);
+      });
+  };
 
   return (
     <div>
@@ -29,7 +56,28 @@ const AdminCatalog = () => {
         <Link to="/manageUser">Manage user</Link>
       </h2>
 
-      <form id="contact-form" onSubmit={(event) => createProductHandler(event)}>
+      <table id="customers">
+        <tr>
+          <th>Product Name</th>
+          <th>Product Description</th>
+          <th>Status</th>
+          <th></th>
+          <th></th>
+        </tr>
+        {products &&
+          products.map((product, index) => (
+            <tr key={product.productId}>
+              <td>{product.productName}</td>
+              <td>{product.productDescription}</td>
+              <td>{product.status}</td>
+              <td>
+                <p onClick={() => deleteHandle(product.productId)}>Delete</p>
+              </td>
+            </tr>
+          ))}
+      </table>
+
+      {/* <form id="contact-form" onSubmit={(event) => createProductHandler(event)}>
         <label htmlFor="productName">Product Name</label>
         <input
           required
@@ -113,8 +161,8 @@ const AdminCatalog = () => {
         </>
 
         {/* <p style={{ color: "red" }}>{error}</p> */}
-        <button type="submit"> Create</button>
-      </form>
+      {/* <button type="submit"> Create</button>
+      </form> */}
     </div>
   );
 };
