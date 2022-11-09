@@ -59,7 +59,7 @@ const UserPage = () => {
           }}
           placeholder={user.email}
           name="email"
-          type="text"
+          type="email"
         />
         <label htmlFor="Category">Password</label>
         <input

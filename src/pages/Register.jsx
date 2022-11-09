@@ -58,6 +58,8 @@ const Register = () => {
             name="username"
             placeholder="Enter your user name..."
             type="text"
+            maxlength="15"
+            minLength="3"
           />
           <label htmlFor="Password">Full name</label>
           <input
@@ -71,6 +73,8 @@ const Register = () => {
             name="fullName"
             placeholder="Enter your name..."
             type="text"
+            maxlength="35"
+            minLength="3"
           />
           <label htmlFor="Password">Email</label>
           <input
@@ -94,6 +98,8 @@ const Register = () => {
             name="password"
             placeholder="Enter your password..."
             type="password"
+            maxlength="20"
+            minLength="6"
           />
           <label htmlFor="Password">Confirm password</label>
           <input
@@ -104,6 +110,8 @@ const Register = () => {
             name="confirmPassword"
             placeholder="Enter your password again..."
             type="password"
+            maxlength="20"
+            minLength="6"
           />
           {/* <p style={{ color: "red" }}>{error}</p> */}
           <button type="submit"> Register</button>
