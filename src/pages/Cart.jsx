@@ -62,19 +62,23 @@ const Cart = () => {
     event.preventDefault();
     const user = JSON.parse(localStorage.getItem("user"));
     if (user) {
-      newOrder(contact, user.user_name, cartItems)
-        .then((result) => {
-          console.log(result);
-          toast.success("Order successfully!");
-          setcontact({ orderAddress: "", phone: "" });
-          setCartItems([]);
-          setCartItemsInfor([]);
-          setTotalPrice(0);
-        })
-        .catch((err) => {
-          toast.error(err.response.data.message);
-          console.log(err.response.data.message);
-        });
+      if (cartItems.length > 0) {
+        newOrder(contact, user.user_name, cartItems)
+          .then((result) => {
+            console.log(result);
+            toast.success("Order successfully!");
+            setcontact({ orderAddress: "", phone: "" });
+            setCartItems([]);
+            setCartItemsInfor([]);
+            setTotalPrice(0);
+          })
+          .catch((err) => {
+            toast.error(err.response.data.message);
+            console.log(err.response.data.message);
+          });
+      } else {
+        toast.error("Nothing in your cart!");
+      }
     } else {
       toast.error("You need to login first to place order!");
     }
@@ -111,7 +115,7 @@ const Cart = () => {
               name="phone"
               placeholder="VD: 123-45-678"
               required
-              type="tel"
+              type="number"
               maxLength="10"
               onChange={(event) => {
                 setcontact({

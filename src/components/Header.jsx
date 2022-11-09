@@ -86,6 +86,17 @@ const Header = ({ setSearchedValue, checkLogin }) => {
                   </Link>
                 </div>
               ))}
+
+            {logged && logged?.user_role === "USER" && (
+              <div
+                className={`header__menu__item header__menu__left__item `}
+                onClick={menuToggle}
+              >
+                <Link to="/profile">
+                  <span>Profile</span>
+                </Link>
+              </div>
+            )}
           </div>
 
           <div className="header__menu__right">
